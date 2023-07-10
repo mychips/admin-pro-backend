@@ -28,9 +28,9 @@ const getTodo = async( req, res = response) => {
 const getDocumentosColeccion = async( req, res = response) => {
 
 
-    const tabla = req.params.tabla;
-    const busqueda = req.params.busqueda;
-    const regex = new RegExp( busqueda, 'i' );
+    const tabla     = req.params.tabla;
+    const busqueda  = req.params.busqueda;
+    const regex     = new RegExp( busqueda, 'i' );
 
     let data =  [];
 
@@ -38,12 +38,13 @@ const getDocumentosColeccion = async( req, res = response) => {
         case 'medicos':
             data = await Medico.find({ nombre: regex })
                                 .populate('usuario', 'nombre img')
-                                .populate('hospital', 'nombre img')
+                                .populate('hospital', 'nombre img');
 
         break;
 
         case 'hospitales':
-            data = await Hospital.find({ nombre: regex });
+            data = await Hospital.find({ nombre: regex })
+                                    .populate('usuario', 'nombre img');
 
         break;
 
