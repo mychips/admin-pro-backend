@@ -1,4 +1,6 @@
 const path = require('path');
+const fs = require('fs');
+
 
 const { response } = require('express');
 const { v4: uuidv4 } = require('uuid');
@@ -82,7 +84,13 @@ const retornaImagen = ( req, res = reszponse ) => {
 
     const pathImg = path.join( __dirname, `../uploads/${ tipo }/${ foto }`);
 
-    res.sendFile( pathImg );
+    // Imagen por defecto
+    if ( fs.existsSync( pathImg ) ) {
+        res.sendFile( pathImg );
+    } else {
+        const pathImg = path.join( __dirname, `../uploads/no-img.jpg` );
+        res.sendFile( pathImg );
+    }
 }
 
 
